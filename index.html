@@ -502,6 +502,72 @@
     </style>
 </head>
 <body>
+  
+    
+    <!-- 
+    ╔═══════════════════════════════════════════════════════════════╗
+    ║  🆕 MÂY BAY ĐA DẠNG - THÊM/BỚT/SỬA MÂY Ở ĐÂY                ║
+    ╠═══════════════════════════════════════════════════════════════╣
+    ║  CÁC LOẠI EMOJI MÂY CÓ THỂ DÙNG:                            ║
+    ║  ☁️ Mây trắng cơ bản                                         ║
+    ║  🌥️ Mây có mặt trời phía sau                                ║
+    ║  ⛅ Mây mặt trời                                              ║
+    ║  🌤️ Mây ít                                                   ║
+    ║  🌨️ Mây tuyết                                                ║
+    ║  💨 Gió thổi                                                  ║
+    ║  🌬️ Mặt thổi gió                                            ║
+    ║                                                               ║
+    ║  CÁCH DÙNG CLASS:                                            ║
+    ║  class="cloud [kích-cỡ] [độ-cao]"                          ║
+    ║                                                               ║
+    ║  Kích cỡ: cloud-small / cloud-medium / cloud-large          ║
+    ║  Độ cao: cloud-low / cloud-mid / cloud-high                 ║
+    ║                                                               ║
+    ║  VÍ DỤ THÊM MÂY MỚI:                                         ║
+    ║  <div class="cloud cloud-large cloud-mid"                   ║
+    ║       style="animation-delay: 20s;">🌥️</div>              ║
+    ║                                                               ║
+    ║  animation-delay: thời điểm bắt đầu (0s, 5s, 10s...)       ║
+    ╚═══════════════════════════════════════════════════════════════╝
+    -->
+    <div class="clouds">
+        <!-- Mây to, bay chậm -->
+        <div class="cloud cloud-large cloud-low" style="animation-delay: 0s;">☁️</div>
+        <div class="cloud cloud-large cloud-mid" style="animation-delay: 10s;">☁️</div>
+        
+        <!-- Mây vừa, tốc độ thường -->
+        <div class="cloud cloud-medium cloud-low" style="animation-delay: 5s;">🌥️</div>
+        <div class="cloud cloud-medium cloud-high" style="animation-delay: 15s;">☁️</div>
+        <div class="cloud cloud-medium cloud-mid" style="animation-delay: 25s;">🌥️</div>
+        
+        <!-- Mây nhỏ, bay nhanh -->
+        <div class="cloud cloud-small cloud-high" style="animation-delay: 3s;">☁️</div>
+        <div class="cloud cloud-small cloud-mid" style="animation-delay: 8s;">💨</div>
+        <div class="cloud cloud-small cloud-low" style="animation-delay: 12s;">☁️</div>
+        <div class="cloud cloud-small cloud-high" style="animation-delay: 18s;">💨</div>
+    </div>
+
+    <div class="container">
+        <h1 class="title">🎊 Tân Xuân Ươm Mầm 🎊</h1>
+        
+        <div class="tree-container">
+            <div class="tree-display">
+                <div id="tree" class="tree">🪴</div>
+            </div>
+            
+            <div id="encouragement" class="encouragement"></div>
+            
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-label">Tiến trình: <span id="progressLabel">1/7</span></div>
+                <div class="progress-bar-wrapper">
+                    <div id="progressBar" class="progress-bar" style="width: 14.28%;">
+                        <span class="progress-text">14%</span>
+                    </div>
+                </div>
+            </div>
+
+            
     <!-- 
     ===== HƯỚNG DẪN THAY ĐỔI ICON TRANG TRÍ =====
     Bạn có thể thay đổi bất kỳ emoji/icon nào dưới đây theo ý muốn:
@@ -513,9 +579,6 @@
     ============================================
     -->
     
-    <!-- Đèn lồng 2 bên (thay đổi emoji ở đây) -->
-    <div class="lantern lantern-left">🏮</div>
-    <div class="lantern lantern-right">🏮</div>
     
     <!-- Mây bay (thay đổi emoji ở đây) -->
     <div class="clouds">
@@ -870,3 +933,4 @@
     </script>
 </body>
 </html>
+
