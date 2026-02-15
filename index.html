@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trồng Cây May Mắn - Tết 2025</title>
+    <title>Tân Xuân Ươm Mầm - Bính Ngọ 2026</title>
     
     <!-- 
     ╔════════════════════════════════════════════════════════════════╗
@@ -31,6 +31,10 @@
     ║  5. CÂU ĐỘNG VIÊN (dòng ~330):                                ║
     ║     - 7 câu tương ứng 7 giai đoạn                             ║
     ║     - Thay text hoặc thêm emoji                               ║
+    ║                                                                ║
+    ║  6. PHÁO HOA (dòng ~400):                                     ║
+    ║     - Số lượng pháo hoa, particles                            ║
+    ║     - Màu sắc và tốc độ                                       ║
     ║                                                                ║
     ║  💡 TÌM EMOJI: https://emojipedia.org                         ║
     ║  💡 Copy emoji và paste vào vị trí muốn thay đổi             ║
@@ -243,7 +247,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.75);
             display: none;
             align-items: center;
             justify-content: center;
@@ -274,7 +278,7 @@
         .completion-message h2 {
             color: #ff6b6b;
             font-size: 2rem;
-            margin-bottom: 20px;
+            margin: 10px 0 20px 0;
         }
 
         .completion-message .poem {
@@ -293,10 +297,11 @@
         }
 
         .plant-info {
-            font-size: 1.3rem;
-            color: #ff6b6b;
-            margin: 20px 0;
+            font-size: 1.2rem;
+            color: #333;
+            margin: 15px 0 20px 0;
             font-weight: 600;
+            line-height: 1.6;
         }
 
         .action-buttons {
@@ -352,6 +357,35 @@
                 transform: translateY(100vh) rotate(360deg);
                 opacity: 0;
             }
+        }
+
+        .firework {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        @keyframes fireworkExplosion {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--x), var(--y)) scale(0);
+                opacity: 0;
+            }
+        }
+
+        .firework-particle {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: fireworkExplosion 1.5s ease-out forwards;
+            z-index: 10000;
         }
 
         .decorations {
@@ -437,7 +471,7 @@
 
         @media (max-width: 768px) {
             .title {
-                font-size: 1.5rem;
+                font-size: 1.3rem;
             }
 
             .tree {
@@ -491,7 +525,7 @@
     </div>
 
     <div class="container">
-        <h1 class="title">🎊 Trồng Cây May Mắn - Tết 2025 🎊</h1>
+        <h1 class="title">🎊 Tân Xuân Ươm Mầm - Bính Ngọ 2026 🎊</h1>
         
         <div class="tree-container">
             <div class="tree-display">
@@ -525,9 +559,9 @@
 
     <div id="completionOverlay" class="completion-overlay">
         <div class="completion-message">
-            <h2>🎊 Chúc Bạn Năm Mới! 🎊</h2>
-            
             <div id="plantInfo" class="plant-info"></div>
+            
+            <h2 style="color: #ff6b6b; font-size: 2rem; margin: 10px 0 20px 0;">Chúc Bạn Năm Mới!</h2>
             
             <div class="poem">
                 Thân tâm an lạc tựa tùng hạc,<br>
@@ -556,16 +590,16 @@
         Mỗi loại cây có 7 giai đoạn (stages array).
         Bạn có thể thay đổi bất kỳ emoji nào trong các giai đoạn:
         
-        Giai đoạn 1: Chậu trống (hiện tại: 🏺)
-        Giai đoạn 2: Mầm nhỏ (hiện tại: 🌱)
+        Giai đoạn 1: Chậu trống (hiện tại: 🌱)
+        Giai đoạn 2: Mầm nhỏ (hiện tại: 🌿)
         Giai đoạn 3-5: Cây lớn dần
         Giai đoạn 6-7: Cây nở hoa/quả
         
         VÍ DỤ EMOJI CÓ THỂ DÙNG:
-        - Chậu: 🏺 🪴 🫙
-        - Mầm: 🌱 🌿
-        - Lá: 🌿 🍃 🌾
-        - Hoa: 🌸 🌼 🌺 🏵️ 🌻 🌷 🌹
+        - Chậu: 🌱
+        - Mầm: 🌿
+        - Lá: 🍀
+        - Hoa: 🌸  🌺 🏵️
         - Quả: 🍊 🍋 🍎 🍑 🍒 🍓
         
         Chỉ cần sửa trong mảng 'stages' của từng loại cây!
@@ -592,21 +626,21 @@
                 emoji: '🌼',
                 meaning: 'Thịnh vượng',
                 color: '#FFD700',
-                stages: ['🏺', '🌱', '🌿', '🌿🌿', '🌿🌿🌿', '🌼🌿🌼', '🌼🌼🌼']
+                stages: ['🌱', '🌿', '🍀', '🌼', '🌼🌿', '🌼🌿🌼', '🌼🌼🌼']
             },
             dao: {
                 name: 'Hoa Đào',
                 emoji: '🌸',
                 meaning: 'Khởi đầu mới',
                 color: '#FFB6C1',
-                stages: ['🏺', '🌱', '🌿', '🌿🌿', '🌿🌿🌿', '🌸🌿🌸', '🌸🌸🌸']
+                stages: ['🌱', '🌿', '🍀', '🌼', '🌸🌿', '🌸🌿🌸', '🌸🌸🌸']
             },
             quat: {
                 name: 'Cây Quất',
                 emoji: '🍊',
                 meaning: 'Sung túc',
                 color: '#FFA500',
-                stages: ['🏺', '🌱', '🌿', '🌿🌿', '🌿🍊', '🌿🍊🍊', '🍊🍊🍊']
+                stages: ['🌱', '🌿', '🍀', '🌼', '🌿🍊', '🌿🍊🍊', '🍊🍊🍊']
             }
         };
 
@@ -619,12 +653,12 @@
         // Encouragement messages
         const messages = {
             1: '',
-            2: '🌱 Đang nảy mầm rồi!',
-            3: '🌿 Cây đang lớn lên!',
-            4: '✨ Sắp nở hoa đẹp lắm!',
-            5: '🌟 Cây đang phát triển tốt!',
-            6: '🎉 May mắn đang đến!',
-            7: '🎊 Hoàn thành!'
+            2: '🌱 Nảy mầm',
+            3: '🌿 Cây đang lớn lên',
+            4: '✨ Sắp nở hoa đẹp lắm',
+            5: '🌟 Cây đang phát triển tốt',
+            6: '🎉 May mắn đang đến',
+            7: '🎊 Thành công'
         };
 
         // DOM elements
@@ -691,15 +725,77 @@
         function completeTree() {
             waterButton.disabled = true;
             
-            // Create confetti
-            createConfetti();
+            // Create initial fireworks effect
+            createFireworks();
             
-            // Show completion message
+            // Create confetti
+            setTimeout(() => {
+                createConfetti();
+            }, 500);
+            
+            // Show completion message with more fireworks
             setTimeout(() => {
                 const plant = plants[plantType];
-                plantInfo.innerHTML = `Bạn đã trồng được ${plant.name}! ${plant.emoji}<br><span style="color: ${plant.color};">(${plant.meaning})</span>`;
+                plantInfo.innerHTML = `Bạn đã trồng được <strong>${plant.name}</strong>! ${plant.emoji}<br><span style="color: ${plant.color};">(${plant.meaning})</span>`;
                 completionOverlay.classList.add('show');
+                
+                // Create another round of fireworks when popup appears
+                setTimeout(() => {
+                    createFireworks();
+                }, 200);
             }, 1000);
+        }
+
+        // Create fireworks effect
+        function createFireworks() {
+            const plant = plants[plantType];
+            
+            /* 
+            === THAY ĐỔI PHÁO HOA ===
+            - Số lượng pháo hoa: thay đổi số 12 trong vòng lặp đầu tiên
+            - Số particles mỗi pháo: thay đổi số 40 trong vòng lặp thứ hai
+            - Tốc độ nổ: thay đổi burst * 300 (milliseconds)
+            - Màu sắc: thêm/bớt mã màu trong mảng colors
+            */
+            const colors = {
+                mai: ['#FFD700', '#FFA500', '#FFED00', '#FF8C00'],
+                dao: ['#FFB6C1', '#FFC0CB', '#FF69B4', '#FF1493'],
+                quat: ['#FFA500', '#FF8C00', '#32CD32', '#FFD700']
+            };
+            
+            const plantColors = colors[plantType];
+            
+            // Create multiple firework bursts (thay đổi số 12 để có nhiều/ít pháo hơn)
+            for (let burst = 0; burst < 12; burst++) {
+                setTimeout(() => {
+                    const x = Math.random() * window.innerWidth;
+                    const y = Math.random() * (window.innerHeight * 0.6) + 50;
+                    
+                    // Create particles for this burst (40 particles mỗi pháo)
+                    for (let i = 0; i < 40; i++) {
+                        const particle = document.createElement('div');
+                        particle.className = 'firework-particle';
+                        
+                        const angle = (Math.PI * 2 * i) / 40;
+                        const velocity = 80 + Math.random() * 120;
+                        const tx = Math.cos(angle) * velocity;
+                        const ty = Math.sin(angle) * velocity;
+                        
+                        particle.style.left = x + 'px';
+                        particle.style.top = y + 'px';
+                        particle.style.background = plantColors[Math.floor(Math.random() * plantColors.length)];
+                        particle.style.setProperty('--x', tx + 'px');
+                        particle.style.setProperty('--y', ty + 'px');
+                        particle.style.boxShadow = `0 0 15px ${plantColors[Math.floor(Math.random() * plantColors.length)]}`;
+                        
+                        document.body.appendChild(particle);
+                        
+                        setTimeout(() => {
+                            particle.remove();
+                        }, 1500);
+                    }
+                }, burst * 300);
+            }
         }
 
         // Create confetti effect
@@ -744,7 +840,7 @@
             const url = window.location.href;
             if (navigator.share) {
                 navigator.share({
-                    title: 'Tân Xuân Ươm Mầm',
+                    title: 'Tân Xuân Ươm Mầm - Bính Ngọ 2026',
                     text: 'Chúc bạn năm mới vạn sự như ý! Hãy trồng cây may mắn của bạn!',
                     url: url
                 }).catch(() => {
@@ -777,4 +873,3 @@
     </script>
 </body>
 </html>
-
