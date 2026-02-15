@@ -149,7 +149,8 @@
             margin-bottom: 5px;
             text-transform: uppercase;
             letter-spacing: 2px;
-            text-shadow: 2px 2px 0px #fff, 3px 3px 0px rgba(0,0,0,0.1);
+            /* Đã bỏ phần bóng trắng (#fff), chỉ giữ lại bóng mờ nhẹ */
+            text-shadow: 3px 3px 0px rgba(0,0,0,0.1);
         }
 
         .sub-title {
@@ -180,15 +181,18 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            /* Đã xóa box-shadow theo yêu cầu */
+            box-shadow: none; 
             position: relative;
             overflow: hidden; 
         }
         
         .shaker-icon {
-            font-size: 80px; 
+            width: 80px; /* Đổi từ font-size sang width để chỉnh size SVG */
+            height: 80px;
             animation: bobbing 2s infinite ease-in-out;
-            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2));
+            /* Xóa filter drop-shadow để phẳng hoàn toàn */
+            filter: none; 
             cursor: default;
         }
 
@@ -291,14 +295,15 @@
             .main-title { font-size: 1.8rem; } /* Giảm kích thước tiêu đề */
             .sub-title { font-size: 0.95rem; margin-bottom: 15px; }
             
-            /* Thu nhỏ ống quẻ */
-            .shaker-container { width: 150px; height: 200px; margin-bottom: 30px; }
-            .shaker-icon { font-size: 65px; }
-
+            /* TỐI ƯU LẠI MOBILE: Giữ nguyên kích thước như Web để không bị "xấu" */
+            /* Trước đây: width: 150px; height: 200px; */
+            /* Bây giờ: Sử dụng kích thước gốc hoặc gần gốc hơn */
+            .shaker-container { margin-bottom: 30px; } 
+            
             /* Thu nhỏ lồng đèn để không che tiêu đề */
             .lantern { width: 45px; height: 60px; }
             .lantern-container { height: 100px; padding: 0 10px; }
-            .string { height: 30px; } /* Dây ngắn lại */
+            .string { height: 30px; } 
             .tassel { bottom: -20px; width: 8px; height: 20px; }
 
             /* Tối ưu thẻ kết quả */
@@ -345,8 +350,28 @@
         <div class="shaker-container" id="shaker">
             <div class="shaker-placeholder">
                 
-                <!-- ICON ĐƠN GIẢN: CHỈ LÀ EMOJI -->
-                <span class="shaker-icon">🐎</span>
+                <!-- ICON CÂY TRE MAY MẮN (SVG) -->
+                <svg class="shaker-icon" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Thân tre -->
+                    <rect x="52" y="15" width="16" height="90" rx="3" fill="#66BB6A" stroke="#2E7D32" stroke-width="2"/>
+                    
+                    <!-- Các đốt tre -->
+                    <line x1="52" y1="35" x2="68" y2="35" stroke="#1B5E20" stroke-width="2" stroke-linecap="round"/>
+                    <line x1="52" y1="60" x2="68" y2="60" stroke="#1B5E20" stroke-width="2" stroke-linecap="round"/>
+                    <line x1="52" y1="85" x2="68" y2="85" stroke="#1B5E20" stroke-width="2" stroke-linecap="round"/>
+                    
+                    <!-- Lá tre bên trái -->
+                    <path d="M52 40 Q30 35 35 20 Q45 25 52 40 Z" fill="#81C784" stroke="#2E7D32" stroke-width="1"/>
+                    <path d="M52 65 Q35 60 40 50 Q48 55 52 65 Z" fill="#81C784" stroke="#2E7D32" stroke-width="1"/>
+
+                    <!-- Lá tre bên phải -->
+                    <path d="M68 30 Q90 25 85 10 Q75 15 68 30 Z" fill="#81C784" stroke="#2E7D32" stroke-width="1"/>
+                    
+                    <!-- Dải lụa đỏ may mắn treo trên thân tre -->
+                    <path d="M60 45 Q70 45 75 50 L95 55 L90 62 L95 69 L75 65 Q65 60 60 55 Z" fill="#D32F2F" stroke="#B71C1C" stroke-width="1"/>
+                    <!-- Nút thắt vàng -->
+                    <circle cx="60" cy="48" r="3" fill="#FFD700"/>
+                </svg>
 
             </div>
         </div>
