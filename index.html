@@ -2,674 +2,778 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <!-- CẬP NHẬT: Thêm meta color-scheme để chặn Dark Mode trên trình duyệt di động -->
-    <meta name="color-scheme" content="light only">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Gieo Quẻ May Mắn - Lời Nhắn Từ Vũ Trụ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trồng Cây May Mắn - Tết 2025</title>
     
-    <!-- Nhúng Font chữ Google -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-
+    <!-- 
+    ╔════════════════════════════════════════════════════════════════╗
+    ║          HƯỚNG DẪN THAY ĐỔI ICON VÀ TRANG TRÍ                ║
+    ╠════════════════════════════════════════════════════════════════╣
+    ║                                                                ║
+    ║  1. TRANG TRÍ NỀN (dòng ~200):                                ║
+    ║     - Đèn lồng 2 bên: 🏮                                       ║
+    ║     - Mây bay: ☁️                                             ║
+    ║     - Texture nền: Pattern kim cương + chấm tròn              ║
+    ║                                                                ║
+    ║  2. NÚT TƯỚI NƯỚC (dòng ~240):                                ║
+    ║     - Icon giọt nước: 💧                                       ║
+    ║     - Text: "Tưới Nước!"                                       ║
+    ║                                                                ║
+    ║  3. PROGRESS BAR (dòng ~130):                                 ║
+    ║     - Màu sắc gradient của thanh tiến trình                   ║
+    ║     - Màu viền và background                                  ║
+    ║                                                                ║
+    ║  4. CÁC GIAI ĐOẠN CÂY (dòng ~290 - JavaScript):               ║
+    ║     - 3 loại cây: mai, dao, quat                              ║
+    ║     - Mỗi loại có 7 giai đoạn (stages array)                  ║
+    ║     - Thay đổi emoji trong mảng stages[]                       ║
+    ║                                                                ║
+    ║  5. CÂU ĐỘNG VIÊN (dòng ~330):                                ║
+    ║     - 7 câu tương ứng 7 giai đoạn                             ║
+    ║     - Thay text hoặc thêm emoji                               ║
+    ║                                                                ║
+    ║  💡 TÌM EMOJI: https://emojipedia.org                         ║
+    ║  💡 Copy emoji và paste vào vị trí muốn thay đổi             ║
+    ║                                                                ║
+    ╚════════════════════════════════════════════════════════════════╝
+    -->
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* ==========================================================================
-           1. CẤU HÌNH MÀU SẮC & GIAO DIỆN CHUNG
-           ========================================================================== */
-        :root {
-            /* CẬP NHẬT: Ép buộc chế độ sáng trong CSS */
-            color-scheme: light;
-            
-            --bg-color: #FFF8E1; 
-            --primary-red: #D32F2F;
-            --dark-red: #B71C1C;
-            --gold-color: #FFD700;
-            --text-color: #3E2723;
-        }
-
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            -webkit-tap-highlight-color: transparent; /* Bỏ highlight khi tap trên mobile */
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            /* Thay đổi overflow để hỗ trợ cuộn trên màn hình quá nhỏ */
-            overflow: hidden; 
-            position: relative;
-        }
-
-        /* --- NỀN HỌA TIẾT TRUYỀN THỐNG --- */
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #FFF8E1;
+            font-family: 'Quicksand', sans-serif;
+            background: #FFF8E7;
             background-image: 
-                radial-gradient(circle at 100% 150%, #FFF8E1 24%, #FFECB3 25%, #FFECB3 28%, #FFF8E1 29%, #FFF8E1 36%, #FFECB3 36%, #FFECB3 40%, transparent 40%, transparent),
-                radial-gradient(circle at 0    150%, #FFF8E1 24%, #FFECB3 25%, #FFECB3 28%, #FFF8E1 29%, #FFF8E1 36%, #FFECB3 36%, #FFECB3 40%, transparent 40%, transparent),
-                radial-gradient(circle at 50%  100%, #FFF8E1 10%, #FFECB3 11%, #FFECB3 23%, #FFF8E1 24%, #FFF8E1 30%, #FFECB3 31%, #FFECB3 43%, #FFF8E1 44%, #FFF8E1 50%, #FFECB3 51%, #FFECB3 63%, #FFF8E1 64%, #FFF8E1 71%, transparent 71%, transparent),
-                radial-gradient(circle at 100% 50%, #FFF8E1 5%, #FFECB3 6%, #FFECB3 15%, #FFF8E1 16%, #FFF8E1 20%, #FFECB3 21%, #FFECB3 30%, #FFF8E1 31%, #FFF8E1 35%, #FFECB3 36%, #FFECB3 45%, #FFF8E1 46%, #FFF8E1 49%, transparent 50%, transparent),
-                radial-gradient(circle at 0    50%, #FFF8E1 5%, #FFECB3 6%, #FFECB3 15%, #FFF8E1 16%, #FFF8E1 20%, #FFECB3 21%, #FFECB3 30%, #FFF8E1 31%, #FFF8E1 35%, #FFECB3 36%, #FFECB3 45%, #FFF8E1 46%, #FFF8E1 49%, transparent 50%, transparent);
-            background-size: 50px 25px;
-            opacity: 0.6;
-            z-index: -2;
-        }
-
-        #fireworks-canvas {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 200;
-        }
-
-        .app-container {
-            text-align: center;
-            width: 100%;
-            max-width: 450px;
-            padding: 20px;
+                repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255, 215, 0, 0.05) 35px, rgba(255, 215, 0, 0.05) 70px),
+                repeating-linear-gradient(-45deg, transparent, transparent 35px, rgba(255, 100, 100, 0.05) 35px, rgba(255, 100, 100, 0.05) 70px),
+                radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 100, 100, 0.1) 0%, transparent 50%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
             position: relative;
-            z-index: 10;
-            /* Đảm bảo nội dung không bị dính sát lề trên mobile */
-            padding-left: 15px;
-            padding-right: 15px;
         }
 
-        /* ==========================================================================
-           2. CÁC HIỆU ỨNG TRANG TRÍ (MÂY, ĐÈN)
-           ========================================================================== */
-        .cloud-container {
+        body::before {
+            content: '';
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            overflow: hidden;
-            z-index: -1;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle, rgba(255, 215, 0, 0.15) 1px, transparent 1px),
+                radial-gradient(circle, rgba(255, 100, 100, 0.15) 1px, transparent 1px);
+            background-size: 50px 50px, 80px 80px;
+            background-position: 0 0, 25px 25px;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        .lantern {
+            position: fixed;
+            font-size: 3rem;
+            animation: swingLantern 3s ease-in-out infinite;
+            z-index: 0;
+            opacity: 0.8;
+        }
+
+        @keyframes swingLantern {
+            0%, 100% { transform: rotate(-8deg); }
+            50% { transform: rotate(8deg); }
+        }
+
+        .lantern-left {
+            top: 50px;
+            left: 5%;
+        }
+
+        .lantern-right {
+            top: 50px;
+            right: 5%;
+        }
+
+        .clouds {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 150px;
+            z-index: 0;
             pointer-events: none;
         }
 
         .cloud {
             position: absolute;
-            width: 150px; height: 80px;
-            background-repeat: no-repeat;
-            background-size: contain;
-            opacity: 0.7;
-            animation: floatCloud linear infinite;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23ffffff' d='M408.8 178.6C411.3 170.1 412.6 161.1 412.6 151.8C412.6 96.6 367.8 51.8 312.6 51.8C281.4 51.8 253.5 66.2 235.1 88.9C224.2 82.2 211.3 78.4 197.6 78.4C153.4 78.4 117.6 114.2 117.6 158.4C117.6 162.2 117.9 165.9 118.4 169.5C65.6 181.3 25.6 227.8 25.6 283.4C25.6 346.9 77.1 398.4 140.6 398.4H408.8C465.9 398.4 512.2 352.1 512.2 295C512.2 239.5 468.2 194.2 413.9 191.7L408.8 178.6Z'/%3E%3C/svg%3E");
-            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.1));
+            bottom: 0;
+            font-size: 4rem;
+            opacity: 0.3;
+            animation: floatCloud 20s linear infinite;
         }
-        .c1 { top: 5%; left: -150px; animation-duration: 35s; width: 180px; opacity: 0.8; }
-        .c2 { top: 20%; left: -120px; animation-duration: 45s; animation-delay: 5s; width: 140px; opacity: 0.5; }
-        .c3 { top: 60%; left: -160px; animation-duration: 30s; animation-delay: 2s; width: 200px; opacity: 0.6; }
-        .c4 { top: 85%; left: -100px; animation-duration: 40s; animation-delay: 10s; width: 120px; opacity: 0.4; }
 
         @keyframes floatCloud {
-            0% { transform: translateX(-150px); }
-            100% { transform: translateX(110vw); }
+            from { transform: translateX(-100px); }
+            to { transform: translateX(calc(100vw + 100px)); }
         }
 
-        .lantern-container {
-            position: fixed;
-            top: -10px; width: 100%; max-width: 600px; height: 150px;
-            pointer-events: none; z-index: 5;
-            display: flex; justify-content: space-between; padding: 0 20px;
+        .container {
+            position: relative;
+            z-index: 1;
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
         }
 
-        .lantern {
-            width: 60px; height: 80px;
-            background: radial-gradient(circle, #ff5252 0%, #b71c1c 100%);
-            border-radius: 30px; position: relative;
-            box-shadow: 0 10px 15px rgba(211, 47, 47, 0.4);
-            animation: swing 3s infinite ease-in-out; transform-origin: top center;
-        }
-        .lantern::before, .lantern::after {
-            content: ''; position: absolute; left: 15px; width: 30px; height: 8px; background: #FFD700; border-radius: 3px;
-        }
-        .lantern::before { top: -5px; }
-        .lantern::after { bottom: -5px; }
-        .tassel {
-            position: absolute; bottom: -25px; left: 25px; width: 10px; height: 30px;
-            border-left: 2px solid #D32F2F; border-right: 2px solid #D32F2F;
-        }
-        .string {
-            position: absolute; top: -50px; left: 29px; width: 2px; height: 50px; background: #5D4037;
-        }
-        .lantern-left { animation-delay: 0s; transform: rotate(5deg); margin-left: 10px; }
-        .lantern-right { animation-delay: 1.5s; transform: rotate(-5deg); margin-right: 10px; }
-        @keyframes swing {
-            0%, 100% { transform: rotate(5deg); } 50% { transform: rotate(-5deg); }
-        }
-
-        /* ==========================================================================
-           4. TIÊU ĐỀ & ỐNG QUẺ
-           ========================================================================== */
-        .main-title {
-            font-family: 'Playfair Display', serif;
-            color: var(--primary-red);
-            font-size: 2.2rem;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            /* Đã bỏ phần bóng trắng (#fff), chỉ giữ lại bóng mờ nhẹ */
-            text-shadow: 3px 3px 0px rgba(0,0,0,0.1);
-        }
-
-        .sub-title {
-            font-size: 1.1rem;
-            color: #795548;
+        .title {
+            color: #d32f2f;
+            font-size: 2rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
-            font-style: italic; font-weight: 500;
+            animation: glow 2s ease-in-out infinite alternate;
         }
 
-        .shaker-container {
-            width: 180px;
-            height: 240px;
-            margin: 0 auto 40px auto;
+        @keyframes glow {
+            from { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); }
+            to { text-shadow: 2px 2px 8px rgba(255, 215, 0, 0.6); }
+        }
+
+        .tree-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: 40px 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            border: 6px solid #d32f2f;
             position: relative;
+            min-height: 500px;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            transition: transform 0.3s;
+            justify-content: center;
         }
 
-        .shaker-placeholder {
+        .tree-display {
             width: 100%;
-            height: 100%;
-            /* Nền vàng rực rỡ */
-            background: linear-gradient(135deg, #FFF59D, #FBC02D, #F57F17);
-            border-radius: 15px;
-            border: 4px solid var(--primary-red);
+            height: 350px;
             display: flex;
+            align-items: flex-end;
             justify-content: center;
-            align-items: center;
-            /* Đã xóa box-shadow theo yêu cầu */
-            box-shadow: none; 
             position: relative;
-            overflow: hidden; 
-        }
-        
-        .shaker-icon {
-            width: 80px; /* Đổi từ font-size sang width để chỉnh size SVG */
-            height: 80px;
-            animation: bobbing 2s infinite ease-in-out;
-            /* Xóa filter drop-shadow để phẳng hoàn toàn */
-            filter: none; 
-            cursor: default;
+            margin-bottom: 20px;
         }
 
-        @keyframes bobbing {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-5px) rotate(2deg); }
+        .tree {
+            font-size: 12rem;
+            transition: all 0.3s ease;
+            transform-origin: bottom center;
         }
 
-        /* ==========================================================================
-           5. NÚT BẤM
-           ========================================================================== */
-        .btn-shake {
-            background-color: var(--primary-red);
-            color: var(--gold-color);
-            border: 2px solid var(--gold-color);
-            padding: 15px 50px;
-            font-size: 1.2rem;
-            font-weight: bold;
+        .tree.growing {
+            animation: grow 0.5s ease;
+        }
+
+        @keyframes grow {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .encouragement {
+            min-height: 40px;
+            font-size: 1.3rem;
+            color: #ff6b6b;
+            font-weight: 600;
+            margin: 15px 0;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .water-button {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            font-size: 1.5rem;
+            font-weight: 700;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 6px 0px #9f1c1c, 0 10px 20px rgba(0,0,0,0.2);
-            transition: all 0.1s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            outline: none;
+            box-shadow: 0 5px 20px rgba(79, 172, 254, 0.4);
+            transition: all 0.3s ease;
+            font-family: 'Quicksand', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0 auto;
+        }
+
+        .water-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(79, 172, 254, 0.6);
+        }
+
+        .water-button:active {
+            transform: translateY(0);
+        }
+
+        .water-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .completion-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .completion-overlay.show {
+            display: flex;
+        }
+
+        .completion-message {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: scale(0.8) translateY(-50px); opacity: 0; }
+            to { transform: scale(1) translateY(0); opacity: 1; }
+        }
+
+        .completion-message h2 {
+            color: #ff6b6b;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .completion-message .poem {
+            color: #333;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin: 20px 0;
+            font-style: italic;
+        }
+
+        .completion-message .signature {
+            color: #666;
+            font-size: 1rem;
+            margin-top: 20px;
+            font-weight: 600;
+        }
+
+        .plant-info {
+            font-size: 1.3rem;
+            color: #ff6b6b;
+            margin: 20px 0;
+            font-weight: 600;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .btn-replay {
+            background: #FFD700;
+            color: #333;
+        }
+
+        .btn-replay:hover {
+            background: #FFC700;
+            transform: translateY(-2px);
+        }
+
+        .btn-share {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .btn-share:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #FFD700;
+            position: absolute;
+            animation: fall 3s linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .decorations {
+            position: absolute;
+            font-size: 2rem;
+            animation: swing 2s ease-in-out infinite;
+        }
+
+        @keyframes swing {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        .stage-indicator {
+            display: none;
+        }
+
+        .progress-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 20px 0 25px 0;
+        }
+
+        .progress-label {
+            display: none;
+        }
+
+        .progress-bar-wrapper {
+            width: 100%;
+            height: 25px;
+            background: #f0f0f0;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+            border: 2px solid #d32f2f;
             position: relative;
-            z-index: 20;
-            /* Đảm bảo nút đủ lớn để bấm trên mobile */
-            min-width: 200px;
-            touch-action: manipulation;
-        }
-        .btn-shake:hover { background-color: #e53935; transform: translateY(-2px); box-shadow: 0 8px 0px #9f1c1c, 0 15px 25px rgba(0,0,0,0.3); }
-        .btn-shake:active { transform: translateY(4px); box-shadow: 0 2px 0px #9f1c1c, 0 5px 10px rgba(0,0,0,0.2); }
-        .btn-shake:disabled { background-color: #9e9e9e; border-color: #757575; color: #e0e0e0; cursor: not-allowed; transform: none; box-shadow: none; }
-
-        /* ==========================================================================
-           6. THẺ KẾT QUẢ
-           ========================================================================== */
-        .overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.7); display: flex; justify-content: center; align-items: center;
-            opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0.4s; z-index: 100; backdrop-filter: blur(5px);
-        }
-        .overlay.active { opacity: 1; visibility: visible; }
-
-        .result-card {
-            background: #fff; width: 90%; max-width: 400px; padding: 30px 25px;
-            border-radius: 16px; border: 4px double var(--gold-color);
-            text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-            transform: scale(0.8) translateY(20px); opacity: 0;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative; background-image: linear-gradient(to top, #fff 80%, #FFF8E1 100%); 
-            max-height: 85vh; /* Giảm chiều cao tối đa trên mobile để tránh che khuất */
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch; /* Cuộn mượt trên iOS */
-        }
-        .overlay.active .result-card { transform: scale(1) translateY(0); opacity: 1; }
-
-        .corner-decoration { position: absolute; width: 30px; height: 30px; border: 3px solid var(--primary-red); opacity: 0.5; pointer-events: none; }
-        .top-left { top: 12px; left: 12px; border-right: none; border-bottom: none; border-radius: 4px 0 0 0; }
-        .top-right { top: 12px; right: 12px; border-left: none; border-bottom: none; border-radius: 0 4px 0 0; }
-        .bottom-left { bottom: 12px; left: 12px; border-right: none; border-top: none; border-radius: 0 0 0 4px; }
-        .bottom-right { bottom: 12px; right: 12px; border-left: none; border-top: none; border-radius: 0 0 4px 0; }
-
-        .que-number { font-size: 0.9rem; color: #8D6E63; font-weight: bold; margin-bottom: 5px; text-transform: uppercase; }
-        .que-name { font-family: 'Playfair Display', serif; color: var(--primary-red); font-size: 2rem; margin-bottom: 20px; border-bottom: 2px solid var(--gold-color); padding-bottom: 15px; display: inline-block; line-height: 1.2; }
-        .que-poem { font-style: italic; color: #4E342E; font-size: 1.1rem; line-height: 1.6; margin-bottom: 20px; font-weight: 500; background: #FFF3E0; padding: 15px; border-radius: 8px; border: 1px solid #FFE0B2; }
-        .que-detail { text-align: left; padding: 10px; font-size: 0.95rem; color: #333; line-height: 1.6; margin-bottom: 20px; }
-        .label { font-weight: 700; color: var(--dark-red); }
-        .wish-box { background: #fff8e1; color: #e65100; padding: 12px; border-radius: 8px; margin-top: 15px; border: 1px dashed #ffb74d; font-weight: 500; text-align: center; }
-        .action-buttons { display: flex; gap: 10px; justify-content: center; margin-top: 20px; flex-wrap: wrap; }
-        .btn-secondary, .btn-share { padding: 12px 20px; border-radius: 25px; cursor: pointer; font-size: 0.95rem; font-weight: 500; border: none; transition: transform 0.2s; min-width: 100px; touch-action: manipulation; }
-        .btn-secondary { background: #fff; border: 1px solid var(--primary-red); color: var(--primary-red); }
-        .btn-secondary:hover { background: #ffebee; }
-        .btn-share { background: #1976D2; color: white; box-shadow: 0 4px 10px rgba(25, 118, 210, 0.3); }
-        .btn-share:hover { background: #1565C0; transform: translateY(-2px); }
-
-        /* Animation rung lắc */
-        @keyframes shake-hard {
-            0% { transform: translate(1px, 1px) rotate(0deg); }
-            10% { transform: translate(-1px, -2px) rotate(-1deg); }
-            20% { transform: translate(-3px, 0px) rotate(1deg); }
-            30% { transform: translate(3px, 2px) rotate(0deg); }
-            40% { transform: translate(1px, -1px) rotate(1deg); }
-            50% { transform: translate(-1px, 2px) rotate(-1deg); }
-            60% { transform: translate(-3px, 1px) rotate(0deg); }
-            70% { transform: translate(3px, 1px) rotate(-1deg); }
-            80% { transform: translate(-1px, -1px) rotate(1deg); }
-            90% { transform: translate(1px, 2px) rotate(0deg); }
-            100% { transform: translate(1px, -2px) rotate(-1deg); }
-        }
-        .is-shaking { animation: shake-hard 0.5s infinite; }
-
-        /* ==========================================================================
-           7. MEDIA QUERIES (TỐI ƯU CHO MOBILE)
-           ========================================================================== */
-        
-        /* Điện thoại màn hình nhỏ và vừa (dưới 480px) */
-        @media (max-width: 480px) {
-            .main-title { font-size: 1.8rem; } /* Giảm kích thước tiêu đề */
-            .sub-title { font-size: 0.95rem; margin-bottom: 15px; }
-            
-            /* TỐI ƯU LẠI MOBILE: Giữ nguyên kích thước như Web để không bị "xấu" */
-            /* Trước đây: width: 150px; height: 200px; */
-            /* Bây giờ: Sử dụng kích thước gốc hoặc gần gốc hơn */
-            .shaker-container { margin-bottom: 30px; } 
-            
-            /* Thu nhỏ lồng đèn để không che tiêu đề */
-            .lantern { width: 45px; height: 60px; }
-            .lantern-container { height: 100px; padding: 0 10px; }
-            .string { height: 30px; } 
-            .tassel { bottom: -20px; width: 8px; height: 20px; }
-
-            /* Tối ưu thẻ kết quả */
-            .result-card { width: 95%; padding: 20px 15px; }
-            .que-name { font-size: 1.6rem; margin-bottom: 15px; }
-            .que-poem { font-size: 1rem; padding: 10px; }
-            
-            /* Nút bấm dễ thao tác hơn */
-            .btn-shake { padding: 15px 30px; font-size: 1.1rem; width: 80%; }
         }
 
-        /* Điện thoại màn hình ngang hoặc rất ngắn */
-        @media (max-height: 650px) {
-            .lantern-container { display: none; } /* Ẩn lồng đèn để tiết kiệm chỗ */
-            .shaker-container { margin-bottom: 20px; height: 180px; width: 140px; }
-            .main-title { margin-top: 10px; font-size: 1.6rem; }
-            .sub-title { margin-bottom: 10px; }
+        .progress-bar {
+            height: 100%;
+            /* === THAY ĐỔI MÀU PROGRESS BAR ===
+               Gradient hiện tại: đỏ → vàng → vàng đậm
+               Thay đổi các mã màu bên dưới:
+            */
+            background: linear-gradient(90deg, #ff6b6b 0%, #ffd93d 50%, #FFD700 100%);
+            border-radius: 20px;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            box-shadow: 0 2px 8px rgba(255, 215, 0, 0.4);
+            position: relative;
         }
 
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255, 255, 255, 0.3) 50%, 
+                transparent 100%);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .progress-text {
+            position: relative;
+            z-index: 1;
+            font-size: 0.8rem;
+            color: #fff;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 1.5rem;
+            }
+
+            .tree {
+                font-size: 8rem;
+            }
+
+            .tree-display {
+                height: 280px;
+            }
+
+            .water-button {
+                padding: 15px 35px;
+                font-size: 1.2rem;
+            }
+
+            .completion-message {
+                padding: 30px 20px;
+            }
+
+            .completion-message h2 {
+                font-size: 1.5rem;
+            }
+
+            .completion-message .poem {
+                font-size: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- 
+    ===== HƯỚNG DẪN THAY ĐỔI ICON TRANG TRÍ =====
+    Bạn có thể thay đổi bất kỳ emoji/icon nào dưới đây theo ý muốn:
     
-    <canvas id="fireworks-canvas"></canvas>
-
-    <div class="cloud-container">
-        <div class="cloud c1"></div>
-        <div class="cloud c2"></div>
-        <div class="cloud c3"></div>
-        <div class="cloud c4"></div>
+    🏮 Đèn lồng - Có thể đổi thành: 🎐 🎊 🎋 🧧 🪔
+    ☁️ Mây - Có thể đổi thành: 🦋 🐦 🕊️
+    
+    Chỉ cần tìm emoji/icon trong code và thay thế!
+    ============================================
+    -->
+    
+    <!-- Đèn lồng 2 bên (thay đổi emoji ở đây) -->
+    <div class="lantern lantern-left">🏮</div>
+    <div class="lantern lantern-right">🏮</div>
+    
+    <!-- Mây bay (thay đổi emoji ở đây) -->
+    <div class="clouds">
+        <div class="cloud" style="animation-delay: 0s;">☁️</div>
+        <div class="cloud" style="animation-delay: 8s;">☁️</div>
+        <div class="cloud" style="animation-delay: 16s;">☁️</div>
     </div>
 
-    <div class="lantern-container">
-        <div class="lantern lantern-left"><div class="string"></div><div class="tassel"></div></div>
-        <div class="lantern lantern-right"><div class="string"></div><div class="tassel"></div></div>
-    </div>
-
-    <div class="app-container">
-        <!-- CẬP NHẬT: THAY ĐỔI TIÊU ĐỀ VÀ CÂU DẪN -->
-        <h1 class="main-title">CHỌN MỘT QUẺ VUI</h1>
-        <p class="sub-title">"BẤM NÚT ĐỂ NHẬN LỜI CHÚC MAY MẮN"</p>
-
-        <!-- VÙNG CHỨA ỐNG QUẺ -->
-        <div class="shaker-container" id="shaker">
-            <div class="shaker-placeholder">
-                
-                <!-- ICON CÂY TRE MAY MẮN (SVG) -->
-                <svg class="shaker-icon" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Thân tre -->
-                    <rect x="52" y="15" width="16" height="90" rx="3" fill="#66BB6A" stroke="#2E7D32" stroke-width="2"/>
-                    
-                    <!-- Các đốt tre -->
-                    <line x1="52" y1="35" x2="68" y2="35" stroke="#1B5E20" stroke-width="2" stroke-linecap="round"/>
-                    <line x1="52" y1="60" x2="68" y2="60" stroke="#1B5E20" stroke-width="2" stroke-linecap="round"/>
-                    <line x1="52" y1="85" x2="68" y2="85" stroke="#1B5E20" stroke-width="2" stroke-linecap="round"/>
-                    
-                    <!-- Lá tre bên trái -->
-                    <path d="M52 40 Q30 35 35 20 Q45 25 52 40 Z" fill="#81C784" stroke="#2E7D32" stroke-width="1"/>
-                    <path d="M52 65 Q35 60 40 50 Q48 55 52 65 Z" fill="#81C784" stroke="#2E7D32" stroke-width="1"/>
-
-                    <!-- Lá tre bên phải -->
-                    <path d="M68 30 Q90 25 85 10 Q75 15 68 30 Z" fill="#81C784" stroke="#2E7D32" stroke-width="1"/>
-                    
-                    <!-- Dải lụa đỏ may mắn treo trên thân tre -->
-                    <path d="M60 45 Q70 45 75 50 L95 55 L90 62 L95 69 L75 65 Q65 60 60 55 Z" fill="#D32F2F" stroke="#B71C1C" stroke-width="1"/>
-                    <!-- Nút thắt vàng -->
-                    <circle cx="60" cy="48" r="3" fill="#FFD700"/>
-                </svg>
-
+    <div class="container">
+        <h1 class="title">🎊 Trồng Cây May Mắn - Tết 2025 🎊</h1>
+        
+        <div class="tree-container">
+            <div class="tree-display">
+                <div id="tree" class="tree">🪴</div>
             </div>
-        </div>
-
-        <button class="btn-shake" id="btn-rut-que">
-            Rút Quẻ May Mắn
-        </button>
-    </div>
-
-    <!-- KHUNG HIỂN THỊ KẾT QUẢ -->
-    <div class="overlay" id="result-overlay">
-        <div class="result-card">
-            <div class="corner-decoration top-left"></div>
-            <div class="corner-decoration top-right"></div>
-            <div class="corner-decoration bottom-left"></div>
-            <div class="corner-decoration bottom-right"></div>
-
-            <div class="que-number" id="res-number">Số 00</div>
-            <h2 class="que-name" id="res-name">Tên Quẻ</h2>
             
-            <div class="que-poem" id="res-poem">...</div>
+            <div id="encouragement" class="encouragement"></div>
             
-            <div class="que-detail">
-                <p><span class="label">Luận giải:</span> <span id="res-giai"></span></p>
-                <p><span class="label">Vận may:</span> <span id="res-vanmay"></span></p>
-                <p><span class="label">Màu hợp:</span> <span id="res-mau"></span></p>
-                <div class="wish-box">
-                    <span class="label">🌟 Chúc bạn:</span> <span id="res-chuc"></span>
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-label">Tiến trình: <span id="progressLabel">1/7</span></div>
+                <div class="progress-bar-wrapper">
+                    <div id="progressBar" class="progress-bar" style="width: 14.28%;">
+                        <span class="progress-text">14%</span>
+                    </div>
                 </div>
             </div>
+            
+            <!-- Kept for backward compatibility but hidden -->
+            <div id="stageIndicator" class="stage-indicator">Giai đoạn: 1/7</div>
+            
+            <!-- 
+            NÚT TƯỚI NƯỚC - Thay đổi icon và text ở đây
+            Emoji có thể dùng: 💧 💦 🚿 🫗 ☔ 🌊
+            -->
+            <button id="waterButton" class="water-button">
+                💧 Tưới Nước!
+            </button>
+        </div>
+    </div>
 
+    <div id="completionOverlay" class="completion-overlay">
+        <div class="completion-message">
+            <h2>🎊 Chúc Bạn Năm Mới! 🎊</h2>
+            
+            <div id="plantInfo" class="plant-info"></div>
+            
+            <div class="poem">
+                Thân tâm an lạc tựa tùng hạc,<br>
+                vận may rạng rỡ tựa thái dương.<br>
+                Vạn dặm hành trình đều gặp quý nhân,<br>
+                mọi lối rẽ đều hướng về hạnh phúc.
+            </div>
+            
+            <div class="signature">From: Hiep Do</div>
+            
             <div class="action-buttons">
-                <button class="btn-secondary" onclick="closeResult()">Rút Lại</button>
-                <button class="btn-share" onclick="shareResult()">Chia Sẻ</button>
+                <button id="replayButton" class="btn btn-replay">🔄 Chơi Lại</button>
+                <button id="shareButton" class="btn btn-share">📤 Chia Sẻ</button>
             </div>
         </div>
     </div>
 
     <script>
-        /* ==========================================================================
-           PHẦN DỮ LIỆU (DATA) - 20 QUẺ VUI VẺ
-           ========================================================================== */
-        const DATA_QUE = [
-            {
-                so: "01", ten: "QUẺ NỤ CƯỜI TỎA NẮNG",
-                tho: "Cười một cái, rạng rỡ cả nhà\nNiềm vui lan tỏa, mặn mà tình thân.",
-                giai: "Bạn sở hữu một siêu năng lực: Chỉ cần bạn cười là mọi người xung quanh đều thấy vui lây. Năm nay hãy cười thật nhiều nhé!",
-                vanmay: "Nụ cười mang lại may mắn tự nhiên.", mau: "Vàng nắng", chuc: "Luôn vui vẻ, cười tít mắt cả năm."
-            },
-            {
-                so: "02", ten: "QUẺ MÂY TRẮNG BAY",
-                tho: "Nhẹ nhàng như áng mây trôi\nKhông lo không nghĩ, thảnh thơi tâm hồn.",
-                giai: "Đầu óc bạn năm nay sẽ nhẹ tênh, không vướng bận âu lo. Mọi chuyện rắc rối tự nhiên tránh xa bạn ra.",
-                vanmay: "Tâm trí bình yên, ngủ ngon, sống khỏe.", mau: "Trắng tinh khôi", chuc: "Sống chậm lại, tận hưởng nhiều hơn."
-            },
-            {
-                so: "03", ten: "QUẺ THẦN HỘ MỆNH",
-                tho: "Đi đường gặp đèn xanh suốt\nLàm gì cũng mượt, chuốt lại là xong.",
-                giai: "Có vẻ như vũ trụ đang ưu ái bạn đặc biệt. Những việc khó khăn vào tay bạn đều trở nên dễ dàng một cách kỳ lạ.",
-                vanmay: "Gặp hung hóa cát, gặp khó hóa dễ.", mau: "Đỏ may mắn", chuc: "Vạn sự hanh thông, xuôi chèo mát mái."
-            },
-            {
-                so: "04", ten: "QUẺ HOA HẬU THÂN THIỆN",
-                tho: "Người đâu gặp gỡ làm chi\nMà ai cũng mến, cũng vì nết ngoan.",
-                giai: "Năm nay chỉ số 'được yêu thích' của bạn tăng vọt. Đi đâu cũng có người quý, làm gì cũng có người thương.",
-                vanmay: "Được mọi người xung quanh cưng chiều.", mau: "Hồng đào", chuc: "Ai gặp cũng yêu, ai nhìn cũng quý."
-            },
-            {
-                so: "05", ten: "QUẺ PIN ĐẦY 100%",
-                tho: "Sáng trưa chiều tối vẫn sung\nNăng lượng dồi dào, vẫy vùng bốn phương.",
-                giai: "Bạn lúc nào cũng tràn trề sức sống như một cục pin sạc đầy. Không biết mệt mỏi, luôn hăng hái tham gia mọi cuộc vui.",
-                vanmay: "Sức khỏe dẻo dai, tinh thần phấn chấn.", mau: "Cam rực rỡ", chuc: "Sung sức cả năm, không biết mệt là gì."
-            },
-            {
-                so: "06", ten: "QUẺ VỰA MUỐI BIỂN ĐÔNG",
-                tho: "Mở miệng là phun châu nhả ngọc\nNói câu nào, cười lăn lóc câu kia.",
-                giai: "Bạn là trung tâm của tiếng cười. Sự hài hước của bạn giúp xua tan mọi căng thẳng trong gia đình.",
-                vanmay: "Mang lại niềm vui cho mọi người.", mau: "Xanh biển", chuc: "Duyên dáng mặn mà, hóm hỉnh thông minh."
-            },
-            {
-                so: "07", ten: "QUẺ ĐÈN SÁNG TRƯNG",
-                tho: "Trong đầu nảy số tinh tinh\nBao nhiêu ý tưởng, thông minh bất ngờ.",
-                giai: "Năm nay đầu óc bạn cực kỳ sáng suốt. Bạn sẽ nghĩ ra được nhiều cách hay ho để giải quyết mọi vấn đề.",
-                vanmay: "Sáng tạo vượt trội, thông minh đột xuất.", mau: "Vàng chanh", chuc: "Đầu óc sáng láng, nghĩ gì cũng hay."
-            },
-            {
-                so: "08", ten: "QUẺ NGẨNG CAO ĐẦU",
-                tho: "Bước đi phong thái tự tin\nHên xui chẳng sợ, chỉ tin chính mình.",
-                giai: "Năm nay bạn sẽ cảm thấy cực kỳ tự tin vào bản thân. Bạn dám làm những điều trước đây chưa dám làm.",
-                vanmay: "Vượt qua nỗi sợ hãi, khẳng định bản lĩnh.", mau: "Đỏ đô", chuc: "Tự tin tỏa sáng, là chính mình tuyệt nhất."
-            },
-            {
-                so: "09", ten: "QUẺ KẸO BÔNG GÒN",
-                tho: "Lời nói nhẹ nhàng êm ái\nNgọt ngào như mật, chẳng trái ý ai.",
-                giai: "Sự dịu dàng của bạn sẽ cảm hóa được mọi người. Năm nay bạn sẽ nhận được rất nhiều lời khen ngợi ngọt ngào.",
-                vanmay: "Giao tiếp khéo léo, được lòng tất cả.", mau: "Hồng phấn", chuc: "Ngọt ngào êm dịu, cuộc sống như thơ."
-            },
-            {
-                so: "10", ten: "QUẺ HỘP QUÀ BÍ MẬT",
-                tho: "Đang đi tự nhiên thấy vui\nBất ngờ ập đến, đẩy lui nỗi buồn.",
-                giai: "Cuộc sống năm nay của bạn sẽ đầy ắp những điều ngạc nhiên thú vị mà không cần báo trước.",
-                vanmay: "Luôn gặp những niềm vui bất ngờ.", mau: "Tím huyền bí", chuc: "Ngày nào cũng là một ngày vui bất ngờ."
-            },
-            {
-                so: "11", ten: "QUẺ NAM CHÂM HÚT KHÁCH",
-                tho: "Bạn bè tíu tít vây quanh\nĐi đâu cũng hội, cũng giành phần vui.",
-                giai: "Bạn giống như thỏi nam châm thu hút mọi người. Bạn sẽ không bao giờ cảm thấy cô đơn trong năm nay.",
-                vanmay: "Đông bạn đông vui, không khí náo nhiệt.", mau: "Xanh ngọc bích", chuc: "Kết nối yêu thương, bạn bè muôn phương."
-            },
-            {
-                so: "12", ten: "QUẺ CỎ BỐN LÁ",
-                tho: "Việc nhỏ cũng hóa việc to\nViệc to hóa nhỏ, chẳng lo việc gì.",
-                giai: "Những rắc rối lớn sẽ tự nhiên biến mất, chỉ còn lại những niềm vui nho nhỏ tích tụ lại thành hạnh phúc lớn.",
-                vanmay: "Mọi sự an bài, bình yên vô sự.", mau: "Xanh lá cây", chuc: "May mắn từ những điều nhỏ bé nhất."
-            },
-            {
-                so: "13", ten: "QUẺ XE ĐUA CÔNG THỨC 1",
-                tho: "Làm gì cũng nhanh như gió\nXong xuôi tất cả, chẳng khó khăn gì.",
-                giai: "Năm nay bạn làm việc gì cũng nhanh gọn lẹ, không lề mề. Hiệu quả công việc và cuộc sống tăng vọt.",
-                vanmay: "Giải quyết vấn đề trong một nốt nhạc.", mau: "Xám bạc", chuc: "Nhanh nhẹn hoạt bát, dẫn đầu cuộc đua."
-            },
-            {
-                so: "14", ten: "QUẺ BÌNH MINH RỰC RỠ",
-                tho: "Ngày mới nắng lên chan hòa\nCái gì cũng mới, đậm đà sắc xuân.",
-                giai: "Bạn sẽ khám phá ra những sở thích mới, những niềm vui mới mà trước giờ chưa từng biết đến.",
-                vanmay: "Tìm thấy niềm hứng khởi mới mỗi ngày.", mau: "Cam bình minh", chuc: "Luôn tươi mới, tràn đầy hy vọng."
-            },
-            {
-                so: "15", ten: "QUẺ CÂY ĐẠI THỤ",
-                tho: "Vững vàng trước gió trước mưa\nTâm tư kiên định, có thừa uy nghi.",
-                giai: "Dù bên ngoài có ồn ào thế nào, tâm bạn vẫn vững như bàn thạch. Bạn là chỗ dựa tinh thần cho người khác.",
-                vanmay: "Bản lĩnh vững vàng, không gì lay chuyển.", mau: "Nâu đất", chuc: "Chân cứng đá mềm, an nhiên tự tại."
-            },
-            {
-                so: "16", ten: "QUẺ NGÔI SAO SÁNG",
-                tho: "Ở đâu bạn cũng nổi bật\nNhư sao lấp lánh, rất thật rất xinh.",
-                giai: "Bạn có một sức hút đặc biệt khiến người khác phải chú ý. Năm nay là năm để bạn tỏa sáng theo cách riêng.",
-                vanmay: "Nổi bật giữa đám đông.", mau: "Vàng ánh kim", chuc: "Tỏa sáng rực rỡ, lấp lánh lung linh."
-            },
-            {
-                so: "17", ten: "QUẺ RỘNG LƯỢNG BAO DUNG",
-                tho: "Tấm lòng rộng mở thênh thang\nCho đi là nhận, mênh mang tình người.",
-                giai: "Bạn càng hào phóng, vui vẻ với mọi người thì niềm vui đến với bạn càng nhiều.",
-                vanmay: "Nhận lại gấp đôi những gì đã cho đi.", mau: "Xanh da trời", chuc: "Tâm hồn rộng mở, hạnh phúc đong đầy."
-            },
-            {
-                so: "18", ten: "QUẺ MƠ ĐẸP",
-                tho: "Ngủ ngon mộng đẹp hằng đêm\nSáng ra tỉnh giấc, êm đềm sướng ghê.",
-                giai: "Chất lượng giấc ngủ tuyệt vời, mơ toàn giấc mơ đẹp báo hiệu một tinh thần cực kỳ khỏe mạnh và lạc quan.",
-                vanmay: "Những giấc mơ đẹp sẽ thành hiện thực.", mau: "Tím oải hương", chuc: "Ăn được ngủ được là tiên."
-            },
-            {
-                so: "19", ten: "QUẺ XUÔI CHÈO MÁT MÁI",
-                tho: "Thuyền xuôi dòng nước êm trôi\nKhông cần chèo chống, tới nơi an toàn.",
-                giai: "Mọi việc năm nay cứ tự nhiên mà thành, không cần phải cố gắng quá sức hay gồng mình.",
-                vanmay: "Thuận theo tự nhiên, kết quả mỹ mãn.", mau: "Xanh lơ", chuc: "Nhẹ nhàng lướt sóng, cập bến vinh quang."
-            },
-            {
-                so: "20", ten: "QUẺ VẠN SỰ NHƯ Ý",
-                tho: "Cầu gì thì được nấy ngay\nNăm nay rực rỡ, vận may ngập tràn.",
-                giai: "Đây là quẻ tốt nhất! Mọi điều ước thầm kín trong lòng bạn đều có cơ hội trở thành hiện thực.",
-                vanmay: "Vô địch thiên hạ về độ may mắn.", mau: "Đỏ rực rỡ", chuc: "Chúc mừng! Mọi điều tốt đẹp nhất đang chờ đón bạn."
-            }
-        ];
-
-        /* ==========================================================================
-           LOGIC XỬ LÝ (JAVASCRIPT)
-           ========================================================================== */
-        const btnRutQue = document.getElementById('btn-rut-que');
-        const shaker = document.getElementById('shaker');
-        const resultOverlay = document.getElementById('result-overlay');
-        const resNumber = document.getElementById('res-number');
-        const resName = document.getElementById('res-name');
-        const resPoem = document.getElementById('res-poem');
-        const resGiai = document.getElementById('res-giai');
-        const resVanMay = document.getElementById('res-vanmay');
-        const resMau = document.getElementById('res-mau');
-        const resChuc = document.getElementById('res-chuc');
-
-        // Logic Pháo hoa
-        const canvas = document.getElementById('fireworks-canvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-        let animationId;
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        class Particle {
-            constructor(x, y, color) {
-                this.x = x; this.y = y; this.color = color;
-                const angle = Math.random() * Math.PI * 2;
-                const speed = Math.random() * 5 + 2; 
-                this.dx = Math.cos(angle) * speed;
-                this.dy = Math.sin(angle) * speed;
-                this.alpha = 1; this.decay = Math.random() * 0.015 + 0.005; this.gravity = 0.05; 
-            }
-            draw() {
-                ctx.save(); ctx.globalAlpha = this.alpha; ctx.beginPath();
-                ctx.arc(this.x, this.y, 3, 0, Math.PI * 2); ctx.fillStyle = this.color; ctx.fill(); ctx.restore();
-            }
-            update() {
-                this.x += this.dx; this.y += this.dy; this.dy += this.gravity; this.alpha -= this.decay;
-            }
-        }
-
-        function createFireworks(x, y) {
-            const colors = ['#FFD700', '#D32F2F', '#00FF00', '#00FFFF', '#FF00FF'];
-            for (let i = 0; i < 50; i++) {
-                const color = colors[Math.floor(Math.random() * colors.length)];
-                particles.push(new Particle(x, y, color));
-            }
-        }
-
-        function animateFireworks() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)'; ctx.clearRect(0, 0, canvas.width, canvas.height); 
-            particles.forEach((particle, index) => {
-                if (particle.alpha > 0) { particle.update(); particle.draw(); } else { particles.splice(index, 1); }
-            });
-            if (particles.length > 0) { animationId = requestAnimationFrame(animateFireworks); } else { cancelAnimationFrame(animationId); }
-        }
-
-        function startCelebration() {
-            for(let i=0; i<5; i++) {
-                setTimeout(() => {
-                    const x = Math.random() * canvas.width;
-                    const y = Math.random() * (canvas.height / 2); 
-                    createFireworks(x, y);
-                    if (particles.length > 0 && particles.length < 60) { animateFireworks(); }
-                }, i * 300); 
-            }
-        }
-
-        let isAnimating = false;
-        let lastResultIndex = -1;
-
-        btnRutQue.addEventListener('click', function() {
-            if (isAnimating) return;
-            isAnimating = true;
-            btnRutQue.disabled = true;
-            // CẬP NHẬT: Sửa lại text hiển thị cho đúng yêu cầu
-            btnRutQue.innerText = "Đang xin quẻ...";
-            shaker.classList.add('is-shaking');
-
-            setTimeout(() => {
-                shaker.classList.remove('is-shaking');
-                showRandomResult();
-                resultOverlay.classList.add('active');
-                startCelebration();
-                isAnimating = false;
-                btnRutQue.disabled = false;
-                btnRutQue.innerText = "Rút Quẻ May Mắn";
-            }, 2000); 
-        });
-
-        function showRandomResult() {
-            let randomIndex;
-            do { randomIndex = Math.floor(Math.random() * DATA_QUE.length); } while (randomIndex === lastResultIndex && DATA_QUE.length > 1);
-            lastResultIndex = randomIndex;
-            const data = DATA_QUE[randomIndex];
-
-            resNumber.innerText = `Quẻ Số ${data.so}`;
-            resName.innerText = data.ten;
-            resPoem.innerHTML = data.tho.replace(/\n/g, '<br>');
-            resGiai.innerText = data.giai;
-            resVanMay.innerText = data.vanmay;
-            resMau.innerText = data.mau;
-            resChuc.innerText = data.chuc;
-        }
-
-        function closeResult() {
-            resultOverlay.classList.remove('active');
-            particles = []; ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
-
-        function shareResult() {
-            const currentName = resName.innerText;
-            const currentChuc = resChuc.innerText;
-            const textToShare = `Tôi vừa rút được ${currentName}! ${currentChuc} #GieoQueMayMan`;
-            if (navigator.clipboard) {
-                navigator.clipboard.writeText(textToShare).then(() => {
-                    alert("Đã sao chép nội dung! Bạn có thể dán lên Facebook/Zalo ngay.");
-                }).catch(() => { alert("Hãy chụp màn hình để chia sẻ sự may mắn này nhé!"); });
-            } else { alert("Hãy chụp màn hình để chia sẻ sự may mắn này nhé!"); }
+        // Game state
+        let currentStage = 1;
+        let plantType = '';
+        
+        /* 
+        ===== HƯỚNG DẪN THAY ĐỔI ICON CÂY =====
+        
+        Mỗi loại cây có 7 giai đoạn (stages array).
+        Bạn có thể thay đổi bất kỳ emoji nào trong các giai đoạn:
+        
+        Giai đoạn 1: Chậu trống (hiện tại: 🏺)
+        Giai đoạn 2: Mầm nhỏ (hiện tại: 🌱)
+        Giai đoạn 3-5: Cây lớn dần
+        Giai đoạn 6-7: Cây nở hoa/quả
+        
+        VÍ DỤ EMOJI CÓ THỂ DÙNG:
+        - Chậu: 🏺 🪴 🫙
+        - Mầm: 🌱 🌿
+        - Lá: 🌿 🍃 🌾
+        - Hoa: 🌸 🌼 🌺 🏵️ 🌻 🌷 🌹
+        - Quả: 🍊 🍋 🍎 🍑 🍒 🍓
+        
+        Chỉ cần sửa trong mảng 'stages' của từng loại cây!
+        
+        === THÊM LOẠI CÂY MỚI ===
+        Copy đoạn code sau và thêm vào sau cây 'quat':
+        
+        ,
+        tencay: {
+            name: 'Tên Cây Của Bạn',
+            emoji: '🌺',
+            meaning: 'Ý nghĩa',
+            color: '#FF1493',
+            stages: ['🏺', '🌱', '🌿', '🌿🌿', '🌿🌿🌿', '🌺🌿🌺', '🌺🌺🌺']
         }
         
-        resultOverlay.addEventListener('click', function(e) {
-            if (e.target === resultOverlay) { closeResult(); }
-        });
+        =========================================
+        */
+        
+        // Plant types configuration
+        const plants = {
+            mai: {
+                name: 'Hoa Mai',
+                emoji: '🌼',
+                meaning: 'Thịnh vượng',
+                color: '#FFD700',
+                stages: ['🏺', '🌱', '🌿', '🌿🌿', '🌿🌿🌿', '🌼🌿🌼', '🌼🌼🌼']
+            },
+            dao: {
+                name: 'Hoa Đào',
+                emoji: '🌸',
+                meaning: 'Khởi đầu mới',
+                color: '#FFB6C1',
+                stages: ['🏺', '🌱', '🌿', '🌿🌿', '🌿🌿🌿', '🌸🌿🌸', '🌸🌸🌸']
+            },
+            quat: {
+                name: 'Cây Quất',
+                emoji: '🍊',
+                meaning: 'Sung túc',
+                color: '#FFA500',
+                stages: ['🏺', '🌱', '🌿', '🌿🌿', '🌿🍊', '🌿🍊🍊', '🍊🍊🍊']
+            }
+        };
+
+        /* 
+        ===== THAY ĐỔI CÂU ĐỘNG VIÊN =====
+        Bạn có thể thay đổi text hoặc thêm emoji cho từng giai đoạn
+        ======================================
+        */
+        
+        // Encouragement messages
+        const messages = {
+            1: '',
+            2: '🌱 Đang nảy mầm rồi!',
+            3: '🌿 Cây đang lớn lên!',
+            4: '✨ Sắp nở hoa đẹp lắm!',
+            5: '🌟 Cây đang phát triển tốt!',
+            6: '🎉 May mắn đang đến!',
+            7: '🎊 Hoàn thành!'
+        };
+
+        // DOM elements
+        const treeElement = document.getElementById('tree');
+        const encouragementElement = document.getElementById('encouragement');
+        const stageIndicatorElement = document.getElementById('stageIndicator');
+        const progressBar = document.getElementById('progressBar');
+        const progressLabel = document.getElementById('progressLabel');
+        const waterButton = document.getElementById('waterButton');
+        const completionOverlay = document.getElementById('completionOverlay');
+        const plantInfo = document.getElementById('plantInfo');
+        const replayButton = document.getElementById('replayButton');
+        const shareButton = document.getElementById('shareButton');
+
+        // Initialize game
+        function initGame() {
+            // Randomly select plant type
+            const plantKeys = Object.keys(plants);
+            plantType = plantKeys[Math.floor(Math.random() * plantKeys.length)];
+            
+            currentStage = 1;
+            updateDisplay();
+            completionOverlay.classList.remove('show');
+            waterButton.disabled = false;
+        }
+
+        // Update display
+        function updateDisplay() {
+            const plant = plants[plantType];
+            treeElement.textContent = plant.stages[currentStage - 1];
+            encouragementElement.textContent = messages[currentStage] || '';
+            
+            // Update progress bar
+            const progressPercentage = (currentStage / 7) * 100;
+            progressBar.style.width = progressPercentage + '%';
+            progressLabel.textContent = `${currentStage}/7`;
+            progressBar.querySelector('.progress-text').textContent = Math.round(progressPercentage) + '%';
+            
+            // Legacy stage indicator (hidden)
+            stageIndicatorElement.textContent = `Giai đoạn: ${currentStage}/7`;
+            
+            // Add growing animation
+            treeElement.classList.remove('growing');
+            setTimeout(() => {
+                treeElement.classList.add('growing');
+            }, 10);
+        }
+
+        // Water plant function
+        function waterPlant() {
+            if (currentStage < 7) {
+                currentStage++;
+                updateDisplay();
+                
+                if (currentStage === 7) {
+                    setTimeout(() => {
+                        completeTree();
+                    }, 500);
+                }
+            }
+        }
+
+        // Complete tree
+        function completeTree() {
+            waterButton.disabled = true;
+            
+            // Create confetti
+            createConfetti();
+            
+            // Show completion message
+            setTimeout(() => {
+                const plant = plants[plantType];
+                plantInfo.innerHTML = `Bạn đã trồng được ${plant.name}! ${plant.emoji}<br><span style="color: ${plant.color};">(${plant.meaning})</span>`;
+                completionOverlay.classList.add('show');
+            }, 1000);
+        }
+
+        // Create confetti effect
+        function createConfetti() {
+            const plant = plants[plantType];
+            
+            /* 
+            === THAY ĐỔI MÀU CONFETTI ===
+            Mỗi loại cây có bộ màu riêng cho hiệu ứng confetti
+            Thay đổi màu hex code bên dưới
+            */
+            const colors = {
+                mai: ['#FFD700', '#FFA500', '#FFED00'],      // Vàng
+                dao: ['#FFB6C1', '#FFC0CB', '#FF69B4'],      // Hồng
+                quat: ['#FFA500', '#FF8C00', '#32CD32']      // Cam-xanh
+            };
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.background = colors[plantType][Math.floor(Math.random() * colors[plantType].length)];
+                    confetti.style.animationDelay = Math.random() * 2 + 's';
+                    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 4000);
+                }, i * 50);
+            }
+        }
+
+        // Reset game
+        function resetGame() {
+            initGame();
+        }
+
+        // Share function
+        function shareGame() {
+            const url = window.location.href;
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Trồng Cây May Mắn - Tết 2025',
+                    text: 'Chúc bạn năm mới vạn sự như ý! Hãy trồng cây may mắn của bạn!',
+                    url: url
+                }).catch(() => {
+                    copyToClipboard(url);
+                });
+            } else {
+                copyToClipboard(url);
+            }
+        }
+
+        // Copy to clipboard
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            
+            alert('Đã sao chép link! 🎊');
+        }
+
+        // Event listeners
+        waterButton.addEventListener('click', waterPlant);
+        replayButton.addEventListener('click', resetGame);
+        shareButton.addEventListener('click', shareGame);
+
+        // Initialize on load
+        initGame();
     </script>
 </body>
 </html>
