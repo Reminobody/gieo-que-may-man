@@ -513,6 +513,10 @@
     ============================================
     -->
     
+    <!-- Đèn lồng 2 bên (thay đổi emoji ở đây) -->
+    <div class="lantern lantern-left">🏮</div>
+    <div class="lantern lantern-right">🏮</div>
+    
     <!-- Mây bay (thay đổi emoji ở đây) -->
     <div class="clouds">
         <div class="cloud" style="animation-delay: 0s;">☁️</div>
@@ -621,21 +625,21 @@
                 emoji: '🌼',
                 meaning: 'Thịnh vượng',
                 color: '#FFD700',
-                stages: ['🌱', '🌿', '🍀', '🌳', '🌴', '🎍', '🌼']
+                stages: ['🌱', '🌿', '🍀', '🌲', '☘️', '🎍', '🌼']
             },
             dao: {
                 name: 'Hoa Đào',
                 emoji: '🌸',
                 meaning: 'Khởi đầu mới',
                 color: '#FFB6C1',
-                stages: ['🌱', '🌿', '🍀', '🌳', '🌴', '🎍', '🌸']
+                stages: ['🌱', '🌿', '🍀', '🌲', '☘️', '🎍', '🌸']
             },
             quat: {
                 name: 'Cây Quất',
                 emoji: '🍊',
                 meaning: 'Sung túc',
                 color: '#FFA500',
-                stages: ['🌱', '🌿', '🍀', '🌳', '🌴', '🎍', '🍊']
+                stages: ['🌱', '🌿', '🍀', '🌲', '☘️', '🎍', '🍊']
             }
         };
 
@@ -666,7 +670,6 @@
         const completionOverlay = document.getElementById('completionOverlay');
         const plantInfo = document.getElementById('plantInfo');
         const replayButton = document.getElementById('replayButton');
-        const shareButton = document.getElementById('shareButton');
 
         // Initialize game
         function initGame() {
@@ -835,7 +838,7 @@
             const url = window.location.href;
             if (navigator.share) {
                 navigator.share({
-                    title: 'Tân Xuân Ươm Mầm - Bính Ngọ 2026',
+                    title: 'Tân Xuân Ươm Mầm',
                     text: 'Chúc bạn năm mới vạn sự như ý! Hãy trồng cây may mắn của bạn!',
                     url: url
                 }).catch(() => {
@@ -861,12 +864,9 @@
         // Event listeners
         waterButton.addEventListener('click', waterPlant);
         replayButton.addEventListener('click', resetGame);
-        shareButton.addEventListener('click', shareGame);
 
         // Initialize on load
         initGame();
     </script>
 </body>
 </html>
-
-
