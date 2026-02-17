@@ -10,35 +10,36 @@
     ║          HƯỚNG DẪN THAY ĐỔI ICON VÀ TRANG TRÍ                ║
     ╠════════════════════════════════════════════════════════════════╣
     ║                                                                ║
-    ║  1. TRANG TRÍ NỀN (dòng ~200):                                ║
-    ║     - Đèn lồng 2 bên: 🏮                                       ║
-    ║     - Mây bay: ☁️                                             ║
-    ║     - Texture nền: Pattern kim cương + chấm tròn              ║
+    ║  1. TEXTURE NỀN (CSS dòng ~60-90):                            ║
+    ║     - Texture vân mây mờ nhạt                                 ║
+    ║     - Pattern kim cương + chấm tròn                           ║
     ║                                                                ║
-    ║  2. NÚT TƯỚI NƯỚC (dòng ~240):                                ║
-    ║     - Icon giọt nước: 💧                                       ║
-    ║     - Text: "Tưới Nước!"                                       ║
+    ║  2. MÂY BAY ĐA DẠNG (CSS ~160, HTML ~210):                    ║
+    ║     - 9 con mây: nhỏ/vừa/to, 3 độ cao                        ║
+    ║     - Emoji: ☁️ 🌥️ 💨 (có thể đổi)                          ║
     ║                                                                ║
-    ║  3. PROGRESS BAR (dòng ~130):                                 ║
-    ║     - Màu sắc gradient của thanh tiến trình                   ║
-    ║     - Màu viền và background                                  ║
+    ║  3. NÚT TƯỚI NƯỚC (HTML ~250):                                ║
+    ║     - Icon: 💧  Text: "Tưới Nước!"                           ║
     ║                                                                ║
-    ║  4. CÁC GIAI ĐOẠN CÂY (dòng ~290 - JavaScript):               ║
+    ║  4. PROGRESS BAR (CSS ~130):                                  ║
+    ║     - Màu gradient thanh tiến trình                           ║
+    ║                                                                ║
+    ║  5. CÁC GIAI ĐOẠN CÂY (JS ~300):                             ║
     ║     - 3 loại cây: mai, dao, quat                              ║
-    ║     - Mỗi loại có 7 giai đoạn (stages array)                  ║
-    ║     - Thay đổi emoji trong mảng stages[]                       ║
+    ║     - 7 giai đoạn mỗi cây (stages array)                      ║
     ║                                                                ║
-    ║  5. CÂU ĐỘNG VIÊN (dòng ~330):                                ║
-    ║     - 7 câu tương ứng 7 giai đoạn                             ║
-    ║     - Thay text hoặc thêm emoji                               ║
+    ║  6. CÂU ĐỘNG VIÊN (JS ~340):                                  ║
+    ║     - 7 câu cho 7 giai đoạn                                   ║
     ║                                                                ║
-    ║  6. PHÁO HOA (dòng ~400):                                     ║
-    ║     - Số lượng pháo hoa, particles                            ║
-    ║     - Màu sắc và tốc độ                                       ║
+    ║  7. PHÁO HOA (JS ~420):                                       ║
+    ║     - Số pháo, particles, màu sắc                             ║
+    ║                                                                ║
+    ║  8. 🆕 NÚT XEM VIDEO (JS ~480):                               ║
+    ║     - Tìm: videoUrl = '...'                                   ║
+    ║     - Thay link YouTube/TikTok/bất kỳ vào đó                 ║
+    ║     - Màu nút: CSS class .btn-video                           ║
     ║                                                                ║
     ║  💡 TÌM EMOJI: https://emojipedia.org                         ║
-    ║  💡 Copy emoji và paste vào vị trí muốn thay đổi             ║
-    ║                                                                ║
     ╚════════════════════════════════════════════════════════════════╝
     -->
     
@@ -55,7 +56,28 @@
         body {
             font-family: 'Quicksand', sans-serif;
             background: #FFF8E7;
+            /* 
+            ╔═══════════════════════════════════════════════════════╗
+            ║  🆕 TEXTURE VÂN MÂY - THAY ĐỔI Ở ĐÂY                 ║
+            ╠═══════════════════════════════════════════════════════╣
+            ║  5 lớp mây mờ nhạt tạo texture cho nền               ║
+            ║  Cú pháp: radial-gradient(ellipse W H at X% Y%, ...)║
+            ║  - W, H: chiều rộng và cao của mây (px)             ║
+            ║  - X%, Y%: vị trí mây (% từ góc trên trái)         ║
+            ║  - rgba(255,255,255,0.4): màu trắng, độ mờ 0.4     ║
+            ║                                                       ║
+            ║  Thêm mây: copy 1 dòng radial-gradient và thay đổi  ║
+            ║  Bớt mây: xóa 1 dòng radial-gradient                ║
+            ╚═══════════════════════════════════════════════════════╝
+            */
             background-image: 
+                /* Vân mây mờ nhạt - Thay đổi vị trí và kích thước ở đây */
+                radial-gradient(ellipse 200px 80px at 20% 30%, rgba(255, 255, 255, 0.4) 0%, transparent 50%),
+                radial-gradient(ellipse 250px 100px at 60% 20%, rgba(255, 255, 255, 0.3) 0%, transparent 50%),
+                radial-gradient(ellipse 180px 70px at 85% 45%, rgba(255, 255, 255, 0.35) 0%, transparent 50%),
+                radial-gradient(ellipse 220px 90px at 15% 70%, rgba(255, 255, 255, 0.3) 0%, transparent 50%),
+                radial-gradient(ellipse 200px 85px at 75% 80%, rgba(255, 255, 255, 0.35) 0%, transparent 50%),
+                /* Pattern kim cương và điểm trang trí */
                 repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255, 215, 0, 0.05) 35px, rgba(255, 215, 0, 0.05) 70px),
                 repeating-linear-gradient(-45deg, transparent, transparent 35px, rgba(255, 100, 100, 0.05) 35px, rgba(255, 100, 100, 0.05) 70px),
                 radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
@@ -86,50 +108,79 @@
             opacity: 0.4;
         }
 
-        .lantern {
-            position: fixed;
-            font-size: 3rem;
-            animation: swingLantern 3s ease-in-out infinite;
-            z-index: 0;
-            opacity: 0.8;
-        }
-
-        @keyframes swingLantern {
-            0%, 100% { transform: rotate(-8deg); }
-            50% { transform: rotate(8deg); }
-        }
-
-        .lantern-left {
-            top: 50px;
-            left: 5%;
-        }
-
-        .lantern-right {
-            top: 50px;
-            right: 5%;
-        }
-
         .clouds {
             position: fixed;
-            bottom: 0;
+            top: 0;
             left: 0;
             right: 0;
-            height: 150px;
+            bottom: 0;
             z-index: 0;
             pointer-events: none;
+            overflow: hidden;
         }
 
         .cloud {
             position: absolute;
-            bottom: 0;
+            left: -300px; /* Bắt đầu ngoài màn hình bên trái */
             font-size: 4rem;
             opacity: 0.3;
             animation: floatCloud 20s linear infinite;
+            animation-fill-mode: both; /* Giữ trạng thái khi delay */
         }
 
+        /* 
+        ╔═══════════════════════════════════════════════════════════╗
+        ║  🆕 MÂY BAY ĐA DẠNG - THÊM/SỬA LOẠI MÂY Ở ĐÂY          ║
+        ╠═══════════════════════════════════════════════════════════╣
+        ║  3 KÍCH CỠ MÂY:                                          ║
+        ║  • cloud-small: Mây nhỏ, bay nhanh                       ║
+        ║    - font-size: 2.5rem (thay đổi để to/nhỏ hơn)         ║
+        ║    - animation: 15s (thay đổi để nhanh/chậm hơn)        ║
+        ║                                                           ║
+        ║  • cloud-medium: Mây vừa, tốc độ thường                  ║
+        ║    - font-size: 3.5rem                                   ║
+        ║    - animation: 20s                                      ║
+        ║                                                           ║
+        ║  • cloud-large: Mây to, bay chậm                         ║
+        ║    - font-size: 5rem                                     ║
+        ║    - animation: 30s                                      ║
+        ║                                                           ║
+        ║  3 ĐỘ CAO (top từ đỉnh màn hình):                        ║
+        ║  • cloud-low:  top: 75% (gần đáy)                       ║
+        ║  • cloud-mid:  top: 45% (giữa màn hình)                 ║
+        ║  • cloud-high: top: 15% (gần đỉnh)                      ║
+        ╚═══════════════════════════════════════════════════════════╝
+        */
+        
+        /* Mây nhỏ, bay nhanh */
+        .cloud-small {
+            font-size: 2.5rem;
+            opacity: 0.2;
+            animation-duration: 15s;
+        }
+
+        /* Mây vừa, tốc độ trung bình */
+        .cloud-medium {
+            font-size: 3.5rem;
+            opacity: 0.25;
+            animation-duration: 22s;
+        }
+
+        /* Mây to, bay chậm */
+        .cloud-large {
+            font-size: 5.5rem;
+            opacity: 0.3;
+            animation-duration: 32s;
+        }
+
+        /* Độ cao (dùng top thay vì bottom để chính xác hơn) */
+        .cloud-low  { top: 75%; }
+        .cloud-mid  { top: 45%; }
+        .cloud-high { top: 15%; }
+
         @keyframes floatCloud {
-            from { transform: translateX(-100px); }
-            to { transform: translateX(calc(100vw + 100px)); }
+            from { transform: translateX(0); }
+            to   { transform: translateX(calc(100vw + 400px)); }
         }
 
         .container {
@@ -343,6 +394,18 @@
             transform: translateY(-2px);
         }
 
+        /* === THAY ĐỔI MÀU NÚT XEM VIDEO Ở ĐÂY === */
+        .btn-video {
+            background: linear-gradient(135deg, #ff6b6b 0%, #d32f2f 100%);
+            color: white;
+        }
+
+        .btn-video:hover {
+            background: linear-gradient(135deg, #ff5252 0%, #b71c1c 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(211, 47, 47, 0.4);
+        }
+
         .confetti {
             position: fixed;
             width: 10px;
@@ -502,7 +565,23 @@
     </style>
 </head>
 <body>
-  
+    <!-- 
+    ===== HƯỚNG DẪN THAY ĐỔI ICON TRANG TRÍ =====
+    Bạn có thể thay đổi bất kỳ emoji/icon nào dưới đây theo ý muốn:
+    
+    🏮 Đèn lồng - Có thể đổi thành: 🎐 🎊 🎋 🧧 🪔
+    
+    === MÂY BAY (ĐA DẠNG) ===
+    Các loại mây có thể dùng: ☁️ 🌥️ ⛅ 🌤️ 🌨️ 💨 🌬️
+    - cloud-small: Mây nhỏ, bay nhanh (15s)
+    - cloud-medium: Mây vừa, tốc độ thường (20s)
+    - cloud-large: Mây to, bay chậm (30s)
+    - cloud-low/mid/high: Độ cao khác nhau
+    
+    Chỉ cần tìm emoji/icon trong code và thay thế!
+    ============================================
+    -->
+    
     
     <!-- 
     ╔═══════════════════════════════════════════════════════════════╗
@@ -511,58 +590,37 @@
     ║  CÁC LOẠI EMOJI MÂY CÓ THỂ DÙNG:                            ║
     ║  ☁️ Mây trắng cơ bản                                         ║
     ║  🌥️ Mây có mặt trời phía sau                                ║
-    ║  ⛅ Mây mặt trời                                              ║
-    ║  🌤️ Mây ít                                                   ║
-    ║  🌨️ Mây tuyết                                                ║
-    ║  💨 Gió thổi                                                  ║
-    ║  🌬️ Mặt thổi gió                                            ║
+    ║  ⛅ Mây mặt trời   💨 Gió thổi   🌬️ Mặt thổi gió           ║
     ║                                                               ║
     ║  CÁCH DÙNG CLASS:                                            ║
-    ║  class="cloud [kích-cỡ] [độ-cao]"                          ║
+    ║  class="cloud [kích-cỡ] [độ-cao]"                           ║
+    ║  Kích cỡ: cloud-small / cloud-medium / cloud-large           ║
+    ║  Độ cao:  cloud-low (75%) / cloud-mid (45%) / cloud-high(15%)║
     ║                                                               ║
-    ║  Kích cỡ: cloud-small / cloud-medium / cloud-large          ║
-    ║  Độ cao: cloud-low / cloud-mid / cloud-high                 ║
+    ║  ⚡ DÙNG DELAY ÂM để mây hiện ngay từ đầu (không chờ):      ║
+    ║  animation-delay: -5s  → mây đã đi được 5s                  ║
+    ║  animation-delay: -10s → mây đã đi được 10s (xa hơn)        ║
     ║                                                               ║
     ║  VÍ DỤ THÊM MÂY MỚI:                                         ║
-    ║  <div class="cloud cloud-large cloud-mid"                   ║
-    ║       style="animation-delay: 20s;">🌥️</div>              ║
-    ║                                                               ║
-    ║  animation-delay: thời điểm bắt đầu (0s, 5s, 10s...)       ║
+    ║  <div class="cloud cloud-large cloud-mid"                    ║
+    ║       style="animation-delay: -8s;">🌥️</div>               ║
     ╚═══════════════════════════════════════════════════════════════╝
     -->
     <div class="clouds">
-        <!-- Mây to, bay chậm -->
-        <div class="cloud cloud-large cloud-low" style="animation-delay: 0s;">☁️</div>
-        <div class="cloud cloud-large cloud-mid" style="animation-delay: 10s;">☁️</div>
-        
-        <!-- Mây vừa, tốc độ thường -->
-        <div class="cloud cloud-medium cloud-low" style="animation-delay: 5s;">🌥️</div>
-        <div class="cloud cloud-medium cloud-high" style="animation-delay: 15s;">☁️</div>
-        <div class="cloud cloud-medium cloud-mid" style="animation-delay: 25s;">🌥️</div>
-        
-        <!-- Mây nhỏ, bay nhanh -->
-        <div class="cloud cloud-small cloud-high" style="animation-delay: 3s;">☁️</div>
-        <div class="cloud cloud-small cloud-mid" style="animation-delay: 8s;">💨</div>
-        <div class="cloud cloud-small cloud-low" style="animation-delay: 12s;">☁️</div>
-        <div class="cloud cloud-small cloud-high" style="animation-delay: 18s;">💨</div>
-    </div>           
-    <!-- 
-    ===== HƯỚNG DẪN THAY ĐỔI ICON TRANG TRÍ =====
-    Bạn có thể thay đổi bất kỳ emoji/icon nào dưới đây theo ý muốn:
-    
-    🏮 Đèn lồng - Có thể đổi thành: 🎐 🎊 🎋 🧧 🪔
-    ☁️ Mây - Có thể đổi thành: 🦋 🐦 🕊️
-    
-    Chỉ cần tìm emoji/icon trong code và thay thế!
-    ============================================
-    -->
-    
-    
-    <!-- Mây bay (thay đổi emoji ở đây) -->
-    <div class="clouds">
-        <div class="cloud" style="animation-delay: 0s;">☁️</div>
-        <div class="cloud" style="animation-delay: 8s;">☁️</div>
-        <div class="cloud" style="animation-delay: 16s;">☁️</div>
+        <!-- Mây to, bay chậm (32s) -->
+        <div class="cloud cloud-large cloud-low"  style="animation-delay: -2s;">☁️</div>
+        <div class="cloud cloud-large cloud-high" style="animation-delay: -18s;">☁️</div>
+
+        <!-- Mây vừa, tốc độ thường (22s) -->
+        <div class="cloud cloud-medium cloud-mid"  style="animation-delay: -5s;">🌥️</div>
+        <div class="cloud cloud-medium cloud-low"  style="animation-delay: -14s;">☁️</div>
+        <div class="cloud cloud-medium cloud-high" style="animation-delay: -20s;">🌥️</div>
+
+        <!-- Mây nhỏ, bay nhanh (15s) -->
+        <div class="cloud cloud-small cloud-high" style="animation-delay: -3s;">☁️</div>
+        <div class="cloud cloud-small cloud-mid"  style="animation-delay: -7s;">💨</div>
+        <div class="cloud cloud-small cloud-low"  style="animation-delay: -11s;">☁️</div>
+        <div class="cloud cloud-small cloud-high" style="animation-delay: -13s;">💨</div>
     </div>
 
     <div class="container">
@@ -611,10 +669,16 @@
                 mọi lối rẽ đều hướng về hạnh phúc.
             </div>
             
-            <div class="signature">From: Hippo Do</div>
+            <div class="signature">From: Reminobody</div>
             
             <div class="action-buttons">
                 <button id="replayButton" class="btn btn-replay">🔄 Chơi Lại</button>
+                <!-- 
+                === NÚT XEM VIDEO ===
+                Thay đổi link video ở phần JavaScript bên dưới
+                Tìm: videoUrl = '...'
+                -->
+                <button id="videoButton" class="btn btn-video">🎬 Video vui ^^</button>
             </div>
         </div>
     </div>
@@ -666,21 +730,21 @@
                 emoji: '🌼',
                 meaning: 'Thịnh vượng',
                 color: '#FFD700',
-                stages: ['🌱', '🌿', '🍀', '🌲', '☘️', '🎍', '🌼']
+                stages: ['🌱', '🌿', '🍀', '🌼', '🌼🌿', '🌼🌿🌼', '🌼🌼🌼']
             },
             dao: {
                 name: 'Hoa Đào',
                 emoji: '🌸',
                 meaning: 'Khởi đầu mới',
                 color: '#FFB6C1',
-                stages: ['🌱', '🌿', '🍀', '🌲', '☘️', '🎍', '🌸']
+                stages: ['🌱', '🌿', '🍀', '🌼', '🌸🌿', '🌸🌿🌸', '🌸🌸🌸']
             },
             quat: {
                 name: 'Cây Quất',
                 emoji: '🍊',
                 meaning: 'Sung túc',
                 color: '#FFA500',
-                stages: ['🌱', '🌿', '🍀', '🌲', '☘️', '🎍', '🍊']
+                stages: ['🌱', '🌿', '🍀', '🌼', '🌿🍊', '🌿🍊🍊', '🍊🍊🍊']
             }
         };
 
@@ -711,6 +775,7 @@
         const completionOverlay = document.getElementById('completionOverlay');
         const plantInfo = document.getElementById('plantInfo');
         const replayButton = document.getElementById('replayButton');
+        const videoButton = document.getElementById('videoButton');
 
         // Initialize game
         function initGame() {
@@ -874,43 +939,22 @@
             initGame();
         }
 
-        // Share function
-        function shareGame() {
-            const url = window.location.href;
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Tân Xuân Ươm Mầm',
-                    text: 'Chúc bạn năm mới vạn sự như ý! Hãy trồng cây may mắn của bạn!',
-                    url: url
-                }).catch(() => {
-                    copyToClipboard(url);
-                });
-            } else {
-                copyToClipboard(url);
-            }
-        }
-
-        // Copy to clipboard
-        function copyToClipboard(text) {
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
-            
-            alert('Đã sao chép link! 🎊');
+        /* 
+        === THAY ĐỔI LINK VIDEO Ở ĐÂY ===
+        Dán link YouTube, TikTok, Google Drive... vào videoUrl
+        */
+        function openVideo() {
+            const videoUrl = 'https://drive.google.com/file/d/1rastaAA9mI_cvUagUjI6rWNtxZkLS_On/view?usp=sharing';
+            window.open(videoUrl, '_blank');
         }
 
         // Event listeners
         waterButton.addEventListener('click', waterPlant);
         replayButton.addEventListener('click', resetGame);
+        videoButton.addEventListener('click', openVideo);
 
         // Initialize on load
         initGame();
     </script>
 </body>
 </html>
-
-
-
